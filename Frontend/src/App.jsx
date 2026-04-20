@@ -14,8 +14,9 @@ function App() {
   const [error, setError] = useState(null);
 
   //  URL DE L'API DE DJANGO
-  const API_URL = "http://127.0.0.1:8000/api";
-
+  //const API_URL = "http://127.0.0.1:8000/api";
+  const API_URL = "https://todo-list-fullstack-ry61.onrender.com/api";
+  
 
   useEffect(() => {
     const fetchData = async () => {
