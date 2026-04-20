@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+db.sqlite3
+
+# React
+node_modules/
+dist/
+build/
+.env
