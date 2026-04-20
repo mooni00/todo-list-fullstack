@@ -1,0 +1,38 @@
+name: CI/CD Todo List
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Test Backend
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Test Backend
+        run: |
+          cd Backend
+          pip install -r requirements.txt
+          python manage.py test
+
+      # Build & Deploy Frontend
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Build and Deploy Frontend
+        run: |
+          cd Frontend
+          npm install
+          npm run build
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          npm run deploy # Cette commande utilise le token GitHub auto-généré
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
