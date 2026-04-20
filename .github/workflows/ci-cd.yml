@@ -6,11 +6,23 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-    steps:
+    # Spécification de l'environnement d'exécution pour ce job
+    # Ici, nous utilisons la dernière version d'Ubuntu disponible sur GitHub Actions
+    # Cela garantit que nous avons un environnement propre et à jour pour exécuter nos tests et notre build
+    runs-on: ubuntu-latest 
+
+    # Définition des étapes à exécuter dans ce job
+    steps: 
+      # Première étape : Checkout du code source
+      # Cette étape utilise l'action officielle de GitHub pour récupérer le code de notre dépôt
+      # C'est une étape essentielle pour que les étapes suivantes puissent accéder au code de notre projet
       - uses: actions/checkout@v4
 
       # Test Backend
+      # Nous configurons Python pour exécuter les tests de notre backend Django
+      # L'action setup-python nous permet de spécifier la version de Python que nous voulons utiliser
+      # Ensuite, nous naviguons dans le répertoire Backend, installons les dépendances et exécutons les tests avec manage.py
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
