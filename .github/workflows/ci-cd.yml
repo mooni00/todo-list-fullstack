@@ -21,18 +21,22 @@ jobs:
           pip install -r requirements.txt
           python manage.py test
 
-      # Build & Deploy Frontend
+      # Build Frontend
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
-      - name: Build and Deploy Frontend
+          cache: 'npm'
+          cache-dependency-path: './Frontend/package-lock.json'
+      - name: Install and Build
         run: |
           cd Frontend
           npm install
           npm run build
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          npm run deploy # Cette commande utilise le token GitHub auto-généré
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Nouveau : Déploiement propre avec l'Action dédiée
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./Frontend/dist # C'est ici que Vite génère les fichiers
